@@ -1,0 +1,9 @@
+﻿cargo : [1m[92m   Compiling[0m simplekey-host v0.1.0 (D:\项目\三模键盘\host-app\src-tauri)
+At line:15 char:2678
++ ... cargo\bin"; cargo check --message-format short > check.log 2>&1; Get- ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([1m[92m   Com...-app\src-tauri):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[1m[92m    Finished[0m ]8;;https://doc.rust-lang.org/cargo/reference/profiles.html#default-profiles\`dev` profile 
+[unoptimized + debuginfo]]8;;\ target(s) in 4.59s

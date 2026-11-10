@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+/* 简单Key上位机 - 浅色主题全局样式 */
+html,
+body,
+#root {
+  height: 100%;
+  user-select: none;
+}
+
+/* 日志台区域允许选择复制 */
+.log-area {
+  user-select: text;
+}

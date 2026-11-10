@@ -1,0 +1,75 @@
+# ESP32-S3 Tri-mode Keyboard - Default Config
+# Author: Regression
+# Version: 1.0.0
+# Date: 2026-09-18
+
+# System Config
+CONFIG_IDF_TARGET="esp32s3"
+
+# Partition Table
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partition_table/partitions.csv"
+CONFIG_PARTITION_TABLE_FILENAME="partition_table/partitions.csv"
+
+# Bluetooth Config
+CONFIG_BT_ENABLED=y
+CONFIG_BT_NIMBLE_ENABLED=y
+CONFIG_BTDM_CTRL_MODE_BLE_ONLY=y
+CONFIG_BT_NIMBLE_MAX_CONNECTIONS=3
+CONFIG_BT_NIMBLE_MAX_PROFILES=3
+CONFIG_BT_NIMBLE_PINNED_TO_CORE=0
+CONFIG_BT_NIMBLE_TASK_STACK_SIZE=4096
+
+# USB Config
+CONFIG_TINYUSB_ENABLED=y
+CONFIG_TINYUSB_HID_COUNT=2
+CONFIG_TINYUSB_DESC_USE_ESPRESSIF_VID=y
+CONFIG_TINYUSB_DESC_USE_DEFAULT_PID=y
+# DCD DWC2 mode: Slave (IRQ-driven), NOT Buffer DMA.
+# Verified 2026-09-27: in DMA mode, 9-byte (odd-length, with Report ID) keyboard
+# IN reports on EP81 never raise XferComplete and the host resets the bus
+# (~57ms later), while 2-byte consumer reports and all EP0 transfers work.
+# Slave mode is the long-proven path used by keyboard projects; CPU cost is
+# negligible for HID (9 bytes per 10ms interval).
+CONFIG_TINYUSB_MODE_SLAVE=y
+# CDC config channel (v2.3, 2026-09-28): composite HID+CDC, USB mode config path
+# (USB HID mode takes GPIO19/20, USB-Serial-JTAG unavailable -> config via TinyUSB CDC)
+CONFIG_TINYUSB_CDC_ENABLED=y
+CONFIG_TINYUSB_CDC_COUNT=1
+CONFIG_TINYUSB_CDC_RX_BUFSIZE=512
+CONFIG_TINYUSB_CDC_TX_BUFSIZE=512
+
+# Serial Config
+# NOTE: TinyUSB OTG and USB-Serial-JTAG share GPIO19/20 and are mutually exclusive.
+# USJ secondary console log writes disturb the OTG bus and cause host reset storm
+# (verified 2026-09-27: "USB mounted" loops every 1-5s in USB mode, no keyboard input).
+# Keep USJ console OFF; logs go to UART0 (CH340) only.
+CONFIG_ESP_CONSOLE_UART_DEFAULT=y
+CONFIG_ESP_CONSOLE_SECONDARY_NONE=y
+CONFIG_ESP_CONSOLE_UART_NUM=0
+CONFIG_ESP_CONSOLE_BAUDRATE=115200
+
+# FreeRTOS Config
+CONFIG_FREERTOS_HZ=1000
+CONFIG_FREERTOS_TIMER_TASK_STACK_DEPTH=4096
+
+# Log Config
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+CONFIG_LOG_MAXIMUM_LEVEL_DEBUG=y
+
+# NVS Config
+CONFIG_NVS_ENCRYPTION=n
+
+# Power Management
+CONFIG_PM_ENABLE=n
+
+# Compiler Optimization
+CONFIG_COMPILER_OPTIMIZATION_PERF=y
+
+# Watchdog & Core Dump (P7, 2026-09-28)
+# Task WDT 5s: timeout panics -> coredump written to flash (64KB coredump partition);
+# main_task / matrix_task / macro_task feed the WDT, serial_task is not registered (blocking fgetc)
+CONFIG_ESP_TASK_WDT_PANIC=y
+CONFIG_ESP_COREDUMP_ENABLE_TO_FLASH=y
+CONFIG_ESP_COREDUMP_DATA_FORMAT_ELF=y
+CONFIG_ESP_COREDUMP_CHECK_BOOT=y

@@ -1,0 +1,8 @@
+# ESP32-S3 Tri-mode Keyboard - Partition Table
+# No OTA - single factory partition (keyboard doesn't need OTA)
+
+# Name,     Type, SubType, Offset,  Size,     Flags
+nvs,        data, nvs,     0x9000,  0x6000,
+phy_init,   data, phy,     0xf000,  0x1000,
+factory,    app,  factory, 0x10000, 0x1E0000,
+coredump,   data, coredump,,        0x10000,

@@ -1,0 +1,30 @@
+# Build directory
+build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# ESP-IDF generated files
+sdkconfig
+sdkconfig.old
+dependencies.lock
+managed_components/
+
+# Compiled files
+*.o
+*.d
+*.map
+*.bin
+*.elf
+*.hex
+
+# Log files
+*.log

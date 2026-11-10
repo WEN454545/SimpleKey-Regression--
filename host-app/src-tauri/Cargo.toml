@@ -1,0 +1,39 @@
+[package]
+name = "simplekey-host"
+version = "0.1.0"
+description = "SimpleKey 三模键盘调试上位机"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serialport = "4"
+btleplug = "0.11"
+futures = "0.3"
+uuid = "1"
+tokio = { version = "1", features = ["rt", "time"] }
+# Profile 导入导出的原生文件对话框（Rust 侧调用，无需前端 capabilities 配置）
+rfd = "0.15"
+
+[target.'cfg(windows)'.dependencies]
+# WinRT BLE 枚举：已连接系统的设备不再广播，btleplug 扫描看不到，
+# 需通过 DeviceInformation 枚举系统已配对/已连接的 BLE 设备直连订阅
+windows = { version = "0.58", features = [
+    "Devices_Bluetooth",
+    "Devices_Bluetooth_GenericAttributeProfile",
+    "Devices_Enumeration",
+    "Foundation",
+    "Foundation_Collections",
+    "Storage_Streams",
+    # WiFi 热点模式：SendInput 注入器（P5 方案 A，热点非 HID 设备）
+    "Win32_UI_Input_KeyboardAndMouse",
+] }
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1

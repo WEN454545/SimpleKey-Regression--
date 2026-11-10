@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Default capability for main window: allows event listen (serial-line / ble-evt forwarding depends on this)",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

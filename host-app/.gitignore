@@ -1,0 +1,11 @@
+# ?
+node_modules/
+dist/
+
+# Rust
+src-tauri/target/
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
