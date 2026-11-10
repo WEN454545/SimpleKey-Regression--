@@ -1,8 +1,10 @@
-﻿﻿# SimpleKey-Regression —— 三模无线宏键盘
+﻿# SimpleKey-Regression —— 三模无线宏键盘
 
 > 基于 **ESP32-S3** 的开源三模无线宏键盘：4×5 布局 19 键 + EC11 旋钮，配套桌面配置软件，VIA 风格界面。
 >
 > 本项目从硬件、固件到上位机均为自研，硬件制版文件与全部源码开源。
+>
+> 开源仓库：**https://github.com/WEN454545/SimpleKey-Regression--** ｜ 欢迎 Star / Issue / PR
 
 <p align="center">
   <img src="images/keyboard.jpg" alt="SimpleKey-Regression 键盘实物" width="560" />
